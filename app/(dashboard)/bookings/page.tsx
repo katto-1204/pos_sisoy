@@ -11,8 +11,42 @@ export default function BookingsPage() {
   const [filter, setFilter] = useState<FilterStatus>("all")
 
   useEffect(() => {
-    const allBookings = storage.getBookings()
-    setBookings(allBookings)
+    // Sync bookings from server on mount
+    const syncBookingsFromServer = async () => {
+      const API_BASE = typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : ''
+      if (API_BASE) {
+        try {
+          const resp = await fetch(`${API_BASE}/bookings?action=list`)
+          if (resp.ok) {
+            const json = await resp.json()
+            if (json && Array.isArray(json.data)) {
+              // Convert server bookings to client format
+              const clientBookings = json.data.map((b: any) => ({
+                id: String(b.id),
+                clientId: String(b.customer_id),
+                accommodationId: String(b.accommodation_id),
+                dateFrom: b.check_in,
+                dateTo: b.check_out,
+                status: b.status || 'confirmed',
+                totalAmount: parseFloat(b.total_price) || 0,
+                createdAt: b.created_at || new Date().toISOString(),
+                paymentStatus: 'paid',
+              }))
+              localStorage.setItem('pos_bookings', JSON.stringify(clientBookings))
+              setBookings(clientBookings)
+              return
+            }
+          }
+        } catch (e) {
+          // fall back to local storage if server unavailable
+        }
+      }
+      // Fallback: read from localStorage
+      const allBookings = storage.getBookings()
+      setBookings(allBookings)
+    }
+    
+    syncBookingsFromServer()
   }, [])
 
   const getFilteredBookings = () => {

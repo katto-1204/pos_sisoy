@@ -24,7 +24,7 @@ function CustomerForm({ selectedClientId, onClientSelect, clients, onClientAdded
     });
     const handleAddClient = async (e)=>{
         e.preventDefault();
-        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") ? ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") : '';
+        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : '';
         // Try server-first: post to customers API and use returned id when available
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;
@@ -468,23 +468,23 @@ function RoomGrid({ checkIn, checkOut, selectedRoomId, onRoomSelect }) {
     console.log("[v0] Total accommodations:", accommodations.length);
     console.log("[v0] All accommodations:", accommodations);
     const rooms = accommodations.filter((a)=>a.type === "Room").sort((a, b)=>{
-        const numA = Number.parseInt(a.name.split(" ")[1]) || 0;
-        const numB = Number.parseInt(b.name.split(" ")[1]) || 0;
+        const numA = Number.parseInt(a.name.split(" ")[1] ?? "0") || 0;
+        const numB = Number.parseInt(b.name.split(" ")[1] ?? "0") || 0;
         return numA - numB;
     });
     const cottagesRegular = accommodations.filter((a)=>a.type === "Cottage" && a.capacity <= 5).sort((a, b)=>{
-        const numA = Number.parseInt(a.name.split(" ").pop()) || 0;
-        const numB = Number.parseInt(b.name.split(" ").pop()) || 0;
+        const numA = Number.parseInt(a.name.split(" ").pop() ?? "0") || 0;
+        const numB = Number.parseInt(b.name.split(" ").pop() ?? "0") || 0;
         return numA - numB;
     });
     const cottagesLarge = accommodations.filter((a)=>a.type === "Cottage" && a.capacity > 5).sort((a, b)=>{
-        const numA = Number.parseInt(a.name.split(" ").pop()) || 0;
-        const numB = Number.parseInt(b.name.split(" ").pop()) || 0;
+        const numA = Number.parseInt(a.name.split(" ").pop() ?? "0") || 0;
+        const numB = Number.parseInt(b.name.split(" ").pop() ?? "0") || 0;
         return numA - numB;
     });
     const villas = accommodations.filter((a)=>a.type === "Villa").sort((a, b)=>{
-        const numA = Number.parseInt(a.name.split(" ")[1]) || 0;
-        const numB = Number.parseInt(b.name.split(" ")[1]) || 0;
+        const numA = Number.parseInt(a.name.split(" ")[1] ?? "0") || 0;
+        const numB = Number.parseInt(b.name.split(" ")[1] ?? "0") || 0;
         return numA - numB;
     });
     console.log("[v0] Rooms:", rooms.length, rooms);
@@ -1153,7 +1153,7 @@ function NewBookingPage() {
                         children: "New Booking"
                     }, void 0, false, {
                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                        lineNumber: 64,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1162,13 +1162,13 @@ function NewBookingPage() {
                         children: "Cancel"
                     }, void 0, false, {
                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                        lineNumber: 65,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                lineNumber: 63,
+                lineNumber: 64,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1185,17 +1185,17 @@ function NewBookingPage() {
                                 onClientAdded: ()=>setClients(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["storage"].getClients())
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                lineNumber: 77,
+                                lineNumber: 78,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                            lineNumber: 76,
+                            lineNumber: 77,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                        lineNumber: 75,
+                        lineNumber: 76,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1210,12 +1210,12 @@ function NewBookingPage() {
                                     onRoomSelect: setSelectedRoom
                                 }, void 0, false, {
                                     fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 91,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                lineNumber: 89,
+                                lineNumber: 90,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1229,7 +1229,7 @@ function NewBookingPage() {
                                                 children: "Select Dates"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                lineNumber: 102,
+                                                lineNumber: 103,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1242,7 +1242,7 @@ function NewBookingPage() {
                                                                 children: "Check-in Date"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                                lineNumber: 105,
+                                                                lineNumber: 106,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1252,13 +1252,13 @@ function NewBookingPage() {
                                                                 className: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                                lineNumber: 106,
+                                                                lineNumber: 107,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                        lineNumber: 104,
+                                                        lineNumber: 105,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1268,7 +1268,7 @@ function NewBookingPage() {
                                                                 children: "Check-out Date"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                                lineNumber: 114,
+                                                                lineNumber: 115,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1278,25 +1278,25 @@ function NewBookingPage() {
                                                                 className: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                                lineNumber: 115,
+                                                                lineNumber: 116,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                        lineNumber: 113,
+                                                        lineNumber: 114,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                                lineNumber: 103,
+                                                lineNumber: 104,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                        lineNumber: 101,
+                                        lineNumber: 102,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1309,18 +1309,18 @@ function NewBookingPage() {
                                             totalAmount: totalAmount()
                                         }, void 0, false, {
                                             fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                            lineNumber: 127,
+                                            lineNumber: 128,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                        lineNumber: 126,
+                                        lineNumber: 127,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                lineNumber: 99,
+                                lineNumber: 100,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1338,30 +1338,30 @@ function NewBookingPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                    lineNumber: 139,
+                                    lineNumber: 140,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                                lineNumber: 138,
+                                lineNumber: 139,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                        lineNumber: 87,
+                        lineNumber: 88,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-                lineNumber: 73,
+                lineNumber: 74,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(dashboard)/booking/new/page.tsx",
-        lineNumber: 62,
+        lineNumber: 63,
         columnNumber: 5
     }, this);
 }

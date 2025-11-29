@@ -37,7 +37,7 @@ export default function CustomerForm({ selectedClientId, onClientSelect, clients
           address: formData.address || '',
         }
 
-        const resp = await fetch(`${API_BASE}/customers.php?action=create`, {
+        const resp = await fetch(`${API_BASE}/customers?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

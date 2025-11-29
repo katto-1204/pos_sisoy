@@ -17,7 +17,7 @@ const STORAGE_KEYS = {
 };
 const STORAGE_VERSION = 2 // increment version to force reset
 ;
-const API_BASE = typeof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] !== 'undefined' && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env && ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") ? ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") : '';
+const API_BASE = typeof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] !== 'undefined' && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : '';
 const storage = {
     initializeStorage: ()=>{
         const version = localStorage.getItem(STORAGE_KEYS.VERSION);
@@ -43,7 +43,7 @@ const storage = {
         // Try to record to backend if API base is configured (fire-and-forget)
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             try {
-                fetch(`${API_BASE}/customers.php?action=create`, {
+                fetch(`${API_BASE}/customers?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ const storage = {
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             try {
                 // send full list to backend (best-effort)
-                fetch(`${API_BASE}/accommodations-updated.php?action=bulk_update`, {
+                fetch(`${API_BASE}/accommodations-updated?action=bulk_update`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ const storage = {
         storage.setAccommodations(accommodations);
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             try {
-                fetch(`${API_BASE}/accommodations.php?action=create`, {
+                fetch(`${API_BASE}/accommodations?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -187,7 +187,9 @@ const storage = {
         localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             try {
-                fetch(`${API_BASE}/bookings.php?action=create`, {
+                // include accommodation_name to help the server resolve legacy/non-numeric IDs
+                const acc = storage.getAccommodations().find((a)=>a.id === booking.accommodationId);
+                fetch(`${API_BASE}/bookings?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -195,6 +197,7 @@ const storage = {
                     body: JSON.stringify({
                         customer_id: booking.clientId,
                         accommodation_id: booking.accommodationId,
+                        accommodation_name: acc ? acc.name : undefined,
                         check_in: booking.dateFrom,
                         check_out: booking.dateTo,
                         guests: 1,
@@ -216,7 +219,7 @@ const storage = {
             localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
             if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
                 try {
-                    fetch(`${API_BASE}/bookings.php?action=update&id=${id}`, {
+                    fetch(`${API_BASE}/bookings?action=update&id=${id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -233,7 +236,7 @@ const storage = {
         localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(filtered));
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             try {
-                fetch(`${API_BASE}/bookings.php?action=delete&id=${id}`, {
+                fetch(`${API_BASE}/bookings?action=delete&id=${id}`, {
                     method: 'DELETE'
                 }).catch(()=>{});
             } catch  {}
@@ -421,7 +424,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 18,
+            lineNumber: 25,
             columnNumber: 51
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -432,7 +435,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 19,
+            lineNumber: 26,
             columnNumber: 55
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -443,7 +446,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 20,
+            lineNumber: 27,
             columnNumber: 49
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -454,7 +457,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 21,
+            lineNumber: 28,
             columnNumber: 61
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -465,7 +468,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 22,
+            lineNumber: 29,
             columnNumber: 47
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -476,7 +479,7 @@ const menuItems = [
             className: "w-5 h-5"
         }, void 0, false, {
             fileName: "[project]/components/layout/sidebar.tsx",
-            lineNumber: 23,
+            lineNumber: 30,
             columnNumber: 49
         }, ("TURBOPACK compile-time value", void 0))
     }
@@ -531,24 +534,24 @@ function Sidebar() {
                                     children: item.label
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/sidebar.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 76,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, item.href, true, {
                             fileName: "[project]/components/layout/sidebar.tsx",
-                            lineNumber: 61,
+                            lineNumber: 68,
                             columnNumber: 15
                         }, this);
                     })
                 }, void 0, false, {
                     fileName: "[project]/components/layout/sidebar.tsx",
-                    lineNumber: 57,
+                    lineNumber: 64,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layout/sidebar.tsx",
-                lineNumber: 56,
+                lineNumber: 63,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
@@ -567,13 +570,13 @@ function Sidebar() {
                                 ]
                             }, item.href, true, {
                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                lineNumber: 82,
+                                lineNumber: 89,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/components/layout/sidebar.tsx",
-                        lineNumber: 78,
+                        lineNumber: 85,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -586,14 +589,14 @@ function Sidebar() {
                                         className: "w-4 h-4"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/sidebar.tsx",
-                                        lineNumber: 99,
+                                        lineNumber: 106,
                                         columnNumber: 13
                                     }, this),
                                     "Today's Check-Ins"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                lineNumber: 98,
+                                lineNumber: 105,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -603,7 +606,7 @@ function Sidebar() {
                                     children: "No check-ins today"
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/sidebar.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 111,
                                     columnNumber: 15
                                 }, this) : checkIns.map((checkIn)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "bg-blue-800 p-2 rounded text-xs",
@@ -613,7 +616,7 @@ function Sidebar() {
                                                 children: checkIn.clientName
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                                lineNumber: 108,
+                                                lineNumber: 115,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -621,7 +624,7 @@ function Sidebar() {
                                                 children: checkIn.roomName
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                                lineNumber: 109,
+                                                lineNumber: 116,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -629,30 +632,30 @@ function Sidebar() {
                                                 children: new Date(checkIn.date).toLocaleDateString()
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                                lineNumber: 110,
+                                                lineNumber: 117,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, checkIn.id, true, {
                                         fileName: "[project]/components/layout/sidebar.tsx",
-                                        lineNumber: 107,
+                                        lineNumber: 114,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/layout/sidebar.tsx",
-                                lineNumber: 102,
+                                lineNumber: 109,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/layout/sidebar.tsx",
-                        lineNumber: 97,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/layout/sidebar.tsx",
-                lineNumber: 77,
+                lineNumber: 84,
                 columnNumber: 7
             }, this)
         ]

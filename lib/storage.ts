@@ -1,6 +1,6 @@
 // Client-side storage utilities for POS system
 
-interface Client {
+export interface Client {
   id: string
   firstName: string
   lastName: string
@@ -9,7 +9,7 @@ interface Client {
   address?: string
 }
 
-interface Accommodation {
+export interface Accommodation {
   id: string
   name: string
   description: string
@@ -19,7 +19,7 @@ interface Accommodation {
   status: "active" | "maintenance"
 }
 
-interface Booking {
+export interface Booking {
   id: string
   clientId: string
   accommodationId: string
@@ -71,7 +71,7 @@ export const storage = {
     // Try to record to backend if API base is configured (fire-and-forget)
     if (typeof window !== 'undefined' && API_BASE) {
       try {
-        fetch(`${API_BASE}/customers.php?action=create`, {
+        fetch(`${API_BASE}/customers?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -146,7 +146,7 @@ export const storage = {
     if (typeof window !== 'undefined' && API_BASE) {
       try {
         // send full list to backend (best-effort)
-        fetch(`${API_BASE}/accommodations-updated.php?action=bulk_update`, {
+        fetch(`${API_BASE}/accommodations-updated?action=bulk_update`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ data: accommodations }),
@@ -160,7 +160,7 @@ export const storage = {
     storage.setAccommodations(accommodations)
     if (typeof window !== 'undefined' && API_BASE) {
       try {
-        fetch(`${API_BASE}/accommodations.php?action=create`, {
+        fetch(`${API_BASE}/accommodations?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -198,12 +198,15 @@ export const storage = {
     localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings))
     if (typeof window !== 'undefined' && API_BASE) {
       try {
-        fetch(`${API_BASE}/bookings.php?action=create`, {
+        // include accommodation_name to help the server resolve legacy/non-numeric IDs
+        const acc = storage.getAccommodations().find((a) => a.id === booking.accommodationId)
+        fetch(`${API_BASE}/bookings?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             customer_id: booking.clientId,
             accommodation_id: booking.accommodationId,
+            accommodation_name: acc ? acc.name : undefined,
             check_in: booking.dateFrom,
             check_out: booking.dateTo,
             guests: 1,
@@ -222,7 +225,7 @@ export const storage = {
       localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings))
       if (typeof window !== 'undefined' && API_BASE) {
         try {
-          fetch(`${API_BASE}/bookings.php?action=update&id=${id}`, {
+          fetch(`${API_BASE}/bookings?action=update&id=${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates),
@@ -237,7 +240,7 @@ export const storage = {
     localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(filtered))
     if (typeof window !== 'undefined' && API_BASE) {
       try {
-        fetch(`${API_BASE}/bookings.php?action=delete&id=${id}`, {
+        fetch(`${API_BASE}/bookings?action=delete&id=${id}`, {
           method: 'DELETE',
         }).catch(() => {})
       } catch {}

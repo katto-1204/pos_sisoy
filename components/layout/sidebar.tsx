@@ -14,6 +14,13 @@ interface SidebarItem {
   icon: React.ReactNode
 }
 
+interface CheckIn {
+  id: string
+  clientName: string
+  roomName: string
+  date: string
+}
+
 const menuItems: SidebarItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
   { label: "New Booking", href: "/booking/new", icon: <Plus className="w-5 h-5" /> },
@@ -25,7 +32,7 @@ const menuItems: SidebarItem[] = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const [checkIns, setCheckIns] = useState([])
+  const [checkIns, setCheckIns] = useState<CheckIn[]>([])
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {

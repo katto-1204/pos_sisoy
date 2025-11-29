@@ -58,7 +58,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
                 50
             ];
             // Header with background
-            doc.setFillColor(...blueColor);
+            doc.setFillColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.rect(0, 0, pageWidth, 40, "F");
             doc.setTextColor(250, 204, 21);
             doc.setFontSize(28);
@@ -74,7 +74,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Receipt details
             let yPosition = 50;
             // Booking ID and Date
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.setFontSize(10);
             doc.setFont("helvetica", "normal");
             doc.text(`Booking ID: ${booking.id}`, 20, yPosition);
@@ -82,18 +82,18 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             doc.text(`Date Issued: ${new Date().toLocaleDateString()}`, 20, yPosition);
             yPosition += 12;
             // Divider
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 10;
             // Guest Information
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("GUEST INFORMATION", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Name: ${clientName}`, 25, yPosition);
             yPosition += 6;
             doc.text(`Booking Date: ${new Date(booking.createdAt).toLocaleDateString()}`, 25, yPosition);
@@ -101,12 +101,12 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Accommodation Details
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("ACCOMMODATION DETAILS", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Accommodation: ${accommodationName}`, 25, yPosition);
             yPosition += 6;
             doc.text(`Check-In: ${new Date(checkIn).toLocaleDateString()}`, 25, yPosition);
@@ -118,7 +118,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Billing Summary
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("BILLING SUMMARY", 20, yPosition);
             yPosition += 8;
             // Summary table
@@ -145,7 +145,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
                 ]
             ];
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             tableData.forEach((row, index)=>{
                 const isHeader = index === 0;
                 if (isHeader) doc.setFont("helvetica", "bold");
@@ -158,35 +158,35 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             });
             // Total
             yPosition += 2;
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 6;
             doc.setFont("helvetica", "bold");
             doc.setFontSize(12);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("TOTAL AMOUNT", 25, yPosition);
             doc.text(`₱${booking.totalAmount.toLocaleString()}`, pageWidth - 40, yPosition, {
                 align: "right"
             });
             yPosition += 14;
             // Payment Info
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "bold");
             doc.setFontSize(10);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("PAYMENT INFORMATION", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Payment Status: PAID`, 25, yPosition);
             yPosition += 6;
             doc.text(`Transaction ID: ${booking.transactionId}`, 25, yPosition);
             yPosition += 12;
             // Footer
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "italic");
@@ -473,6 +473,8 @@ function PaymentPage() {
     const [paymentMethod, setPaymentMethod] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("cash");
     const [isProcessing, setIsProcessing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [completedBooking, setCompletedBooking] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [completedClientName, setCompletedClientName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [completedAccommodationName, setCompletedAccommodationName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const handleSimulatePayment = async ()=>{
         setIsProcessing(true);
         // Simulate API call
@@ -485,37 +487,34 @@ function PaymentPage() {
             paymentStatus: "paid",
             transactionId: `TXN${Date.now()}`
         };
-        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") ? ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") : '';
+        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : 'http://localhost:3000/api';
         // Try to create booking on server first when API is configured
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;
-        // Fallback local-only
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["storage"].addBooking(booking);
-        sessionStorage.removeItem("tempBooking");
+        // If API not configured or unavailable, prevent booking — require server persistence
+        alert('Booking failed: server API not configured or unreachable. Booking must be created on the server.');
         setIsProcessing(false);
-        setCompletedBooking(booking);
+        return;
     };
     const handleCloseModal = ()=>{
         setCompletedBooking(null);
         router.push("/dashboard");
     };
     if (completedBooking) {
-        const client = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["storage"].getClients().find((c)=>c.id === completedBooking.clientId);
-        const accommodation = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["storage"].getAccommodations().find((a)=>a.id === completedBooking.accommodationId);
         const checkIn = new Date(completedBooking.dateFrom);
         const checkOut = new Date(completedBooking.dateTo);
         const nights = Math.floor((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$booking$2f$booking$2d$complete$2d$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
             booking: completedBooking,
-            clientName: client ? `${client.firstName} ${client.lastName}` : "Guest",
-            accommodationName: accommodation?.name || "Accommodation",
+            clientName: completedClientName || 'Guest',
+            accommodationName: completedAccommodationName || 'Accommodation',
             checkIn: completedBooking.dateFrom,
             checkOut: completedBooking.dateTo,
             nights: nights,
             onClose: handleCloseModal
         }, void 0, false, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 140,
+            lineNumber: 229,
             columnNumber: 7
         }, this);
     }
@@ -529,7 +528,7 @@ function PaymentPage() {
                     children: "Confirm Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 155,
+                    lineNumber: 244,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -540,7 +539,7 @@ function PaymentPage() {
                             children: "Total Amount Due"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 158,
+                            lineNumber: 247,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -551,13 +550,13 @@ function PaymentPage() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 159,
+                            lineNumber: 248,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 157,
+                    lineNumber: 246,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -570,7 +569,7 @@ function PaymentPage() {
                                 children: "Payment Method"
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 164,
+                                lineNumber: 253,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -583,7 +582,7 @@ function PaymentPage() {
                                         children: "Cash Payment"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 259,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -591,7 +590,7 @@ function PaymentPage() {
                                         children: "GCash"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 260,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -599,7 +598,7 @@ function PaymentPage() {
                                         children: "Credit Card"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 261,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -607,24 +606,24 @@ function PaymentPage() {
                                         children: "Bank Transfer"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 173,
+                                        lineNumber: 262,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 165,
+                                lineNumber: 254,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                        lineNumber: 163,
+                        lineNumber: 252,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 162,
+                    lineNumber: 251,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -634,7 +633,7 @@ function PaymentPage() {
                     children: isProcessing ? "Processing Payment..." : "Confirm & Process Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 178,
+                    lineNumber: 267,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -645,31 +644,31 @@ function PaymentPage() {
                             children: "Payment Confirmation"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 187,
+                            lineNumber: 276,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: "Payment will be processed securely. A receipt will be generated upon completion."
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 188,
+                            lineNumber: 277,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 186,
+                    lineNumber: 275,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 154,
+            lineNumber: 243,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-        lineNumber: 153,
+        lineNumber: 242,
         columnNumber: 5
     }, this);
 }

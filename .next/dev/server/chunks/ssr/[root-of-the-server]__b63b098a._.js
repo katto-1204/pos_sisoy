@@ -40,7 +40,7 @@ const STORAGE_KEYS = {
 };
 const STORAGE_VERSION = 2 // increment version to force reset
 ;
-const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") ? ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") : '';
+const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : '';
 const storage = {
     initializeStorage: ()=>{
         const version = localStorage.getItem(STORAGE_KEYS.VERSION);

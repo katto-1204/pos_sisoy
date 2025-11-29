@@ -42,7 +42,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
                 50
             ];
             // Header with background
-            doc.setFillColor(...blueColor);
+            doc.setFillColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.rect(0, 0, pageWidth, 40, "F");
             doc.setTextColor(250, 204, 21);
             doc.setFontSize(28);
@@ -58,7 +58,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Receipt details
             let yPosition = 50;
             // Booking ID and Date
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.setFontSize(10);
             doc.setFont("helvetica", "normal");
             doc.text(`Booking ID: ${booking.id}`, 20, yPosition);
@@ -66,18 +66,18 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             doc.text(`Date Issued: ${new Date().toLocaleDateString()}`, 20, yPosition);
             yPosition += 12;
             // Divider
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 10;
             // Guest Information
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("GUEST INFORMATION", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Name: ${clientName}`, 25, yPosition);
             yPosition += 6;
             doc.text(`Booking Date: ${new Date(booking.createdAt).toLocaleDateString()}`, 25, yPosition);
@@ -85,12 +85,12 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Accommodation Details
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("ACCOMMODATION DETAILS", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Accommodation: ${accommodationName}`, 25, yPosition);
             yPosition += 6;
             doc.text(`Check-In: ${new Date(checkIn).toLocaleDateString()}`, 25, yPosition);
@@ -102,7 +102,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             // Billing Summary
             doc.setFont("helvetica", "bold");
             doc.setFontSize(11);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("BILLING SUMMARY", 20, yPosition);
             yPosition += 8;
             // Summary table
@@ -129,7 +129,7 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
                 ]
             ];
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             tableData.forEach((row, index)=>{
                 const isHeader = index === 0;
                 if (isHeader) doc.setFont("helvetica", "bold");
@@ -142,35 +142,35 @@ function BookingCompleteModal({ booking, clientName, accommodationName, checkIn,
             });
             // Total
             yPosition += 2;
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 6;
             doc.setFont("helvetica", "bold");
             doc.setFontSize(12);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("TOTAL AMOUNT", 25, yPosition);
             doc.text(`₱${booking.totalAmount.toLocaleString()}`, pageWidth - 40, yPosition, {
                 align: "right"
             });
             yPosition += 14;
             // Payment Info
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "bold");
             doc.setFontSize(10);
-            doc.setTextColor(...blueColor);
+            doc.setTextColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.text("PAYMENT INFORMATION", 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "normal");
             doc.setFontSize(10);
-            doc.setTextColor(...grayColor);
+            doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
             doc.text(`Payment Status: PAID`, 25, yPosition);
             yPosition += 6;
             doc.text(`Transaction ID: ${booking.transactionId}`, 25, yPosition);
             yPosition += 12;
             // Footer
-            doc.setDrawColor(...blueColor);
+            doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2]);
             doc.line(20, yPosition, pageWidth - 20, yPosition);
             yPosition += 8;
             doc.setFont("helvetica", "italic");
@@ -467,6 +467,8 @@ function PaymentPage() {
     const [paymentMethod, setPaymentMethod] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("cash");
     const [isProcessing, setIsProcessing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [completedBooking, setCompletedBooking] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [completedClientName, setCompletedClientName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [completedAccommodationName, setCompletedAccommodationName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const handleSimulatePayment = async ()=>{
         setIsProcessing(true);
         // Simulate API call
@@ -479,19 +481,64 @@ function PaymentPage() {
             paymentStatus: "paid",
             transactionId: `TXN${Date.now()}`
         };
-        const API_BASE = typeof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] !== 'undefined' && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env && ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") ? ("TURBOPACK compile-time value", "http://localhost/pos-booking-system/backend/api") : '';
+        const API_BASE = typeof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] !== 'undefined' && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : 'http://localhost:3000/api';
         // Try to create booking on server first when API is configured
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+            // quick ping to backend to make sure it's reachable and DB connection ok
             try {
-                // Ensure the customer exists on server. If the selected clientId is not a numeric DB id,
-                // attempt to create the customer first and replace customer_id with the returned id.
+                const ping = await fetch(`${API_BASE}/test_db_conn`);
+                if (!ping.ok) {
+                    alert('Booking failed: server API unreachable (ping returned ' + ping.status + '). Please ensure Apache/MySQL are running and backend is reachable.');
+                    setIsProcessing(false);
+                    return;
+                }
+                try {
+                    const pj = await ping.json();
+                    if (!pj || pj.connected !== true) {
+                        alert('Booking failed: server DB connection is not ready. Check backend DB settings and XAMPP services.');
+                        setIsProcessing(false);
+                        return;
+                    }
+                } catch (e) {
+                // non-json response; continue and let subsequent calls fail with clearer errors
+                }
+            } catch (e) {
+                alert('Booking failed: server API not reachable. Please start the backend (Apache/MySQL) and verify NEXT_PUBLIC_API_URL.');
+                setIsProcessing(false);
+                return;
+            }
+            try {
+                // Ensure the customer exists on server. Search by email/phone/name first; if not found, create.
                 let customerIdToUse = booking.clientId;
-                const isNumericId = /^[0-9]+$/.test(String(customerIdToUse));
-                if (!isNumericId) {
-                    const clientObj = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getClients().find((c)=>c.id === booking.clientId);
-                    if (clientObj) {
-                        try {
-                            const createResp = await fetch(`${API_BASE}/customers.php?action=create`, {
+                const clientObj = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getClients().find((c)=>c.id === booking.clientId);
+                if (clientObj) {
+                    try {
+                        // Prefer searching by email, then phone, then name
+                        let searchTerm = '';
+                        if (clientObj.email) searchTerm = clientObj.email;
+                        else if (clientObj.phoneNumber) searchTerm = clientObj.phoneNumber;
+                        else searchTerm = `${clientObj.firstName} ${clientObj.lastName}`;
+                        if (searchTerm && searchTerm.length >= 2) {
+                            try {
+                                const sresp = await fetch(`${API_BASE}/customers?action=search&term=${encodeURIComponent(searchTerm)}`);
+                                if (sresp.ok) {
+                                    const sjson = await sresp.json();
+                                    if (sjson && Array.isArray(sjson.data) && sjson.data.length > 0) {
+                                        // Try to find best match (email or phone)
+                                        const match = sjson.data.find((c)=>clientObj.email && c.email === clientObj.email || clientObj.phoneNumber && c.phone === clientObj.phoneNumber || c.first_name === clientObj.firstName && c.last_name === clientObj.lastName);
+                                        if (match && match.id) {
+                                            customerIdToUse = String(match.id);
+                                        }
+                                    }
+                                }
+                            } catch (e) {
+                            // ignore search failures and fall back to create
+                            }
+                        }
+                        // If still not matched (or search not available), create customer on server
+                        if (!customerIdToUse || String(customerIdToUse).length > 10) {
+                            // numeric local IDs generated by Date.now() can be long - treat them as local-only
+                            const createResp = await fetch(`${API_BASE}/customers?action=create`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -508,7 +555,7 @@ function PaymentPage() {
                                 const cjson = await createResp.json();
                                 if (cjson && cjson.id) {
                                     customerIdToUse = String(cjson.id);
-                                    // update local client id to server id so subsequent operations use server id
+                                    // update local client id to server id for consistency
                                     try {
                                         const clients = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getClients();
                                         const idx = clients.findIndex((c)=>c.id === clientObj.id);
@@ -519,20 +566,24 @@ function PaymentPage() {
                                     } catch  {}
                                 }
                             }
-                        } catch (e) {
-                        // ignore and continue — booking will fallback to local if needed
                         }
+                    } catch (e) {
+                    // ignore and continue — will be handled later
                     }
                 }
                 const payload = {
                     customer_id: customerIdToUse,
                     accommodation_id: booking.accommodationId,
+                    accommodation_name: (()=>{
+                        const acc = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getAccommodations().find((a)=>a.id === booking.accommodationId);
+                        return acc ? acc.name : undefined;
+                    })(),
                     check_in: booking.dateFrom,
                     check_out: booking.dateTo,
                     guests: 1,
                     total_price: booking.totalAmount
                 };
-                const resp = await fetch(`${API_BASE}/bookings.php?action=create`, {
+                const resp = await fetch(`${API_BASE}/bookings?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -548,48 +599,79 @@ function PaymentPage() {
                     };
                     // ensure booking references the server customer id
                     serverBooking.clientId = customerIdToUse;
-                    // write to local storage manually to avoid duplicate POST
-                    try {
-                        const existing = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getBookings() || [];
-                        existing.push(serverBooking);
-                        localStorage.setItem('pos_bookings', JSON.stringify(existing));
-                    } catch  {}
                     sessionStorage.removeItem("tempBooking");
+                    // Fetch updated bookings list from server and sync to localStorage
+                    try {
+                        const listResp = await fetch(`${API_BASE}/bookings?action=list`);
+                        if (listResp.ok) {
+                            const listJson = await listResp.json();
+                            if (listJson && Array.isArray(listJson.data)) {
+                                // Convert server bookings to client format and store
+                                const clientBookings = listJson.data.map((b)=>({
+                                        id: String(b.id),
+                                        clientId: String(b.customer_id),
+                                        accommodationId: String(b.accommodation_id),
+                                        dateFrom: b.check_in,
+                                        dateTo: b.check_out,
+                                        status: b.status || 'confirmed',
+                                        totalAmount: parseFloat(b.total_price) || 0,
+                                        createdAt: b.created_at || new Date().toISOString(),
+                                        paymentStatus: 'paid'
+                                    }));
+                                localStorage.setItem('pos_bookings', JSON.stringify(clientBookings));
+                            }
+                        }
+                    } catch (e) {
+                    // non-fatal: continue even if list fetch fails
+                    }
                     setIsProcessing(false);
                     setCompletedBooking(serverBooking);
+                    // determine client name for modal (prefer clientObj if available)
+                    const clientObj = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getClients().find((c)=>c.id === booking.clientId) || null;
+                    if (clientObj) setCompletedClientName(`${clientObj.firstName} ${clientObj.lastName}`);
+                    else setCompletedClientName(null);
+                    const accommodation = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getAccommodations().find((a)=>a.id === serverBooking.accommodationId);
+                    setCompletedAccommodationName(accommodation?.name || null);
+                    return;
+                } else {
+                    // Try to parse error body
+                    let errText = 'Failed to create booking on server';
+                    try {
+                        const errJson = await resp.json();
+                        if (errJson && errJson.error) errText = String(errJson.error);
+                    } catch  {}
+                    alert(errText);
+                    setIsProcessing(false);
                     return;
                 }
             } catch (e) {
             // fall back to local-only if server call fails
             }
         }
-        // Fallback local-only
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].addBooking(booking);
-        sessionStorage.removeItem("tempBooking");
+        // If API not configured or unavailable, prevent booking — require server persistence
+        alert('Booking failed: server API not configured or unreachable. Booking must be created on the server.');
         setIsProcessing(false);
-        setCompletedBooking(booking);
+        return;
     };
     const handleCloseModal = ()=>{
         setCompletedBooking(null);
         router.push("/dashboard");
     };
     if (completedBooking) {
-        const client = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getClients().find((c)=>c.id === completedBooking.clientId);
-        const accommodation = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["storage"].getAccommodations().find((a)=>a.id === completedBooking.accommodationId);
         const checkIn = new Date(completedBooking.dateFrom);
         const checkOut = new Date(completedBooking.dateTo);
         const nights = Math.floor((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$booking$2f$booking$2d$complete$2d$modal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
             booking: completedBooking,
-            clientName: client ? `${client.firstName} ${client.lastName}` : "Guest",
-            accommodationName: accommodation?.name || "Accommodation",
+            clientName: completedClientName || 'Guest',
+            accommodationName: completedAccommodationName || 'Accommodation',
             checkIn: completedBooking.dateFrom,
             checkOut: completedBooking.dateTo,
             nights: nights,
             onClose: handleCloseModal
         }, void 0, false, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 140,
+            lineNumber: 229,
             columnNumber: 7
         }, this);
     }
@@ -603,7 +685,7 @@ function PaymentPage() {
                     children: "Confirm Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 155,
+                    lineNumber: 244,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -614,7 +696,7 @@ function PaymentPage() {
                             children: "Total Amount Due"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 158,
+                            lineNumber: 247,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -625,13 +707,13 @@ function PaymentPage() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 159,
+                            lineNumber: 248,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 157,
+                    lineNumber: 246,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -644,7 +726,7 @@ function PaymentPage() {
                                 children: "Payment Method"
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 164,
+                                lineNumber: 253,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -657,7 +739,7 @@ function PaymentPage() {
                                         children: "Cash Payment"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 259,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -665,7 +747,7 @@ function PaymentPage() {
                                         children: "GCash"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 260,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -673,7 +755,7 @@ function PaymentPage() {
                                         children: "Credit Card"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 261,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -681,24 +763,24 @@ function PaymentPage() {
                                         children: "Bank Transfer"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 173,
+                                        lineNumber: 262,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 165,
+                                lineNumber: 254,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                        lineNumber: 163,
+                        lineNumber: 252,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 162,
+                    lineNumber: 251,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -708,7 +790,7 @@ function PaymentPage() {
                     children: isProcessing ? "Processing Payment..." : "Confirm & Process Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 178,
+                    lineNumber: 267,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -719,35 +801,35 @@ function PaymentPage() {
                             children: "Payment Confirmation"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 187,
+                            lineNumber: 276,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: "Payment will be processed securely. A receipt will be generated upon completion."
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 188,
+                            lineNumber: 277,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 186,
+                    lineNumber: 275,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 154,
+            lineNumber: 243,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-        lineNumber: 153,
+        lineNumber: 242,
         columnNumber: 5
     }, this);
 }
-_s(PaymentPage, "c7zgtERuLutAZe2abCjKeIDiyR0=", false, function() {
+_s(PaymentPage, "OyMr2Gw2hguJ5cqXlsE16ml5+NI=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"]

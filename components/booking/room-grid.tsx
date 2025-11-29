@@ -23,32 +23,32 @@ export default function RoomGrid({ checkIn, checkOut, selectedRoomId, onRoomSele
   const rooms = accommodations
     .filter((a) => a.type === "Room")
     .sort((a, b) => {
-      const numA = Number.parseInt(a.name.split(" ")[1]) || 0
-      const numB = Number.parseInt(b.name.split(" ")[1]) || 0
+      const numA = Number.parseInt((a.name.split(" ")[1] ?? "0")) || 0
+      const numB = Number.parseInt((b.name.split(" ")[1] ?? "0")) || 0
       return numA - numB
     })
 
   const cottagesRegular = accommodations
     .filter((a) => a.type === "Cottage" && a.capacity <= 5)
-    .sort((a, b) => {
-      const numA = Number.parseInt(a.name.split(" ").pop()) || 0
-      const numB = Number.parseInt(b.name.split(" ").pop()) || 0
+      .sort((a, b) => {
+      const numA = Number.parseInt((a.name.split(" ").pop() ?? "0")) || 0
+      const numB = Number.parseInt((b.name.split(" ").pop() ?? "0")) || 0
       return numA - numB
     })
 
   const cottagesLarge = accommodations
     .filter((a) => a.type === "Cottage" && a.capacity > 5)
-    .sort((a, b) => {
-      const numA = Number.parseInt(a.name.split(" ").pop()) || 0
-      const numB = Number.parseInt(b.name.split(" ").pop()) || 0
+      .sort((a, b) => {
+      const numA = Number.parseInt((a.name.split(" ").pop() ?? "0")) || 0
+      const numB = Number.parseInt((b.name.split(" ").pop() ?? "0")) || 0
       return numA - numB
     })
 
   const villas = accommodations
     .filter((a) => a.type === "Villa")
     .sort((a, b) => {
-      const numA = Number.parseInt(a.name.split(" ")[1]) || 0
-      const numB = Number.parseInt(b.name.split(" ")[1]) || 0
+      const numA = Number.parseInt((a.name.split(" ")[1] ?? "0")) || 0
+      const numB = Number.parseInt((b.name.split(" ")[1] ?? "0")) || 0
       return numA - numB
     })
 

@@ -9,13 +9,13 @@ export default function AccommodationsPage() {
   const [accommodations, setAccommodations] = useState<Accommodation[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState("")
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<Accommodation, "id">>({
     name: "",
-    type: "Room" as const,
+    type: "Room",
     description: "",
     capacity: 2,
     pricePerNight: 100,
-    status: "active" as const,
+    status: "active",
   })
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function AccommodationsPage() {
               />
               <select
                 value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value as Accommodation["type"] })}
                 className="px-3 py-2 border border-(--gray-light) rounded"
               >
                 <option value="Villa">Villa</option>

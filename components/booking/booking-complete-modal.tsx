@@ -39,7 +39,7 @@ export default function BookingCompleteModal({
       const grayColor = [50, 50, 50]
 
       // Header with background
-      doc.setFillColor(...blueColor)
+      doc.setFillColor(blueColor[0], blueColor[1], blueColor[2])
       doc.rect(0, 0, pageWidth, 40, "F")
 
       doc.setTextColor(250, 204, 21)
@@ -55,7 +55,7 @@ export default function BookingCompleteModal({
       let yPosition = 50
 
       // Booking ID and Date
-      doc.setTextColor(...grayColor)
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
       doc.setFontSize(10)
       doc.setFont("helvetica", "normal")
 
@@ -65,20 +65,20 @@ export default function BookingCompleteModal({
       yPosition += 12
 
       // Divider
-      doc.setDrawColor(...blueColor)
+      doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2])
       doc.line(20, yPosition, pageWidth - 20, yPosition)
       yPosition += 10
 
       // Guest Information
       doc.setFont("helvetica", "bold")
       doc.setFontSize(11)
-      doc.setTextColor(...blueColor)
+      doc.setTextColor(blueColor[0], blueColor[1], blueColor[2])
       doc.text("GUEST INFORMATION", 20, yPosition)
       yPosition += 8
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(10)
-      doc.setTextColor(...grayColor)
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
       doc.text(`Name: ${clientName}`, 25, yPosition)
       yPosition += 6
       doc.text(`Booking Date: ${new Date(booking.createdAt).toLocaleDateString()}`, 25, yPosition)
@@ -87,13 +87,13 @@ export default function BookingCompleteModal({
       // Accommodation Details
       doc.setFont("helvetica", "bold")
       doc.setFontSize(11)
-      doc.setTextColor(...blueColor)
+      doc.setTextColor(blueColor[0], blueColor[1], blueColor[2])
       doc.text("ACCOMMODATION DETAILS", 20, yPosition)
       yPosition += 8
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(10)
-      doc.setTextColor(...grayColor)
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
       doc.text(`Accommodation: ${accommodationName}`, 25, yPosition)
       yPosition += 6
       doc.text(`Check-In: ${new Date(checkIn).toLocaleDateString()}`, 25, yPosition)
@@ -106,7 +106,7 @@ export default function BookingCompleteModal({
       // Billing Summary
       doc.setFont("helvetica", "bold")
       doc.setFontSize(11)
-      doc.setTextColor(...blueColor)
+      doc.setTextColor(blueColor[0], blueColor[1], blueColor[2])
       doc.text("BILLING SUMMARY", 20, yPosition)
       yPosition += 8
 
@@ -120,7 +120,7 @@ export default function BookingCompleteModal({
       ]
 
       doc.setFontSize(10)
-      doc.setTextColor(...grayColor)
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
 
       tableData.forEach((row, index) => {
         const isHeader = index === 0
@@ -134,39 +134,39 @@ export default function BookingCompleteModal({
 
       // Total
       yPosition += 2
-      doc.setDrawColor(...blueColor)
+      doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2])
       doc.line(20, yPosition, pageWidth - 20, yPosition)
       yPosition += 6
 
       doc.setFont("helvetica", "bold")
       doc.setFontSize(12)
-      doc.setTextColor(...blueColor)
+      doc.setTextColor(blueColor[0], blueColor[1], blueColor[2])
       doc.text("TOTAL AMOUNT", 25, yPosition)
       doc.text(`₱${booking.totalAmount.toLocaleString()}`, pageWidth - 40, yPosition, { align: "right" })
 
       yPosition += 14
 
       // Payment Info
-      doc.setDrawColor(...blueColor)
+      doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2])
       doc.line(20, yPosition, pageWidth - 20, yPosition)
       yPosition += 8
 
       doc.setFont("helvetica", "bold")
       doc.setFontSize(10)
-      doc.setTextColor(...blueColor)
+      doc.setTextColor(blueColor[0], blueColor[1], blueColor[2])
       doc.text("PAYMENT INFORMATION", 20, yPosition)
       yPosition += 8
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(10)
-      doc.setTextColor(...grayColor)
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
       doc.text(`Payment Status: PAID`, 25, yPosition)
       yPosition += 6
       doc.text(`Transaction ID: ${booking.transactionId}`, 25, yPosition)
       yPosition += 12
 
       // Footer
-      doc.setDrawColor(...blueColor)
+      doc.setDrawColor(blueColor[0], blueColor[1], blueColor[2])
       doc.line(20, yPosition, pageWidth - 20, yPosition)
       yPosition += 8
 

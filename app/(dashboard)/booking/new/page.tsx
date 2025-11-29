@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import type { Client } from "@/lib/storage"
 import { useRouter } from "next/navigation"
 import { storage } from "@/lib/storage"
 import CustomerForm from "@/components/booking/customer-form"
@@ -13,7 +14,7 @@ export default function NewBookingPage() {
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
   const [selectedRoom, setSelectedRoom] = useState("")
-  const [clients, setClients] = useState([])
+  const [clients, setClients] = useState<Client[]>([])
 
   useEffect(() => {
     setClients(storage.getClients())
