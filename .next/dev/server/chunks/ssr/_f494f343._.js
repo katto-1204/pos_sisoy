@@ -24,7 +24,7 @@ function CustomerForm({ selectedClientId, onClientSelect, clients, onClientAdded
     });
     const handleAddClient = async (e)=>{
         e.preventDefault();
-        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : '';
+        const API_BASE = typeof process !== 'undefined' && process.env && ("TURBOPACK compile-time value", "http://localhost:3001/api") ? ("TURBOPACK compile-time value", "http://localhost:3001/api") : '';
         // Try server-first: post to customers API and use returned id when available
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;

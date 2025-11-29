@@ -23,6 +23,22 @@ const mod = __turbopack_context__.x("next/dist/server/app-render/work-async-stor
 
 module.exports = mod;
 }),
+"[project]/lib/api.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// Utility to get the correct API base URL
+__turbopack_context__.s([
+    "getApiBase",
+    ()=>getApiBase
+]);
+function getApiBase() {
+    if ("TURBOPACK compile-time truthy", 1) {
+        return ("TURBOPACK compile-time value", "http://localhost:3001/api") || 'http://localhost:3000/api';
+    }
+    //TURBOPACK unreachable
+    ;
+}
+}),
 "[project]/lib/storage.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -31,6 +47,8 @@ __turbopack_context__.s([
     "storage",
     ()=>storage
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-ssr] (ecmascript)");
+;
 const STORAGE_KEYS = {
     CLIENTS: "pos_clients",
     ACCOMMODATIONS: "pos_accommodations",
@@ -646,4 +664,4 @@ function DashboardLayout({ children }) {
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__f0808f90._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__c3a5a178._.js.map

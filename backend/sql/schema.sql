@@ -86,6 +86,27 @@ CREATE TABLE IF NOT EXISTS payments (
     INDEX (status)
 );
 
+-- Transactions Table (for recording all payment transactions)
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50),
+    status ENUM('pending', 'completed', 'failed', 'refunded') DEFAULT 'completed',
+    transaction_reference VARCHAR(100),
+    description TEXT,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    INDEX (booking_id),
+    INDEX (customer_id),
+    INDEX (status),
+    INDEX (created_at)
+);
+
 -- Daily Revenue Table (for reports)
 CREATE TABLE IF NOT EXISTS daily_revenue (
     id INT PRIMARY KEY AUTO_INCREMENT,

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { storage, type Booking } from "@/lib/storage"
+import { getApiBase } from "@/lib/api"
 
 export default function DashboardPage() {
   const [bookings, setBookings] = useState<Booking[]>([])
@@ -14,32 +15,89 @@ export default function DashboardPage() {
   })
 
   useEffect(() => {
-    const allBookings = storage.getBookings()
-    setBookings(allBookings)
-
-    const today = new Date().toISOString().split("T")[0]
-    const todayBookings = allBookings.filter((b) => b.dateFrom === today)
-
-    const accommodations = storage.getAccommodations()
-    const occupiedToday = new Set(
-      allBookings
-        .filter((b) => {
-          const from = new Date(b.dateFrom)
-          const to = new Date(b.dateTo)
-          const now = new Date(today)
-          return from <= now && now < to && b.status !== "cancelled"
+    const syncBookingsFromServer = async () => {
+      try {
+        const apiBase = getApiBase()
+        
+        // Fetch fresh bookings from server
+        const res = await fetch(`${apiBase}/bookings?action=list`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
         })
-        .map((b) => b.accommodationId),
-    ).size
+        
+        if (res.ok) {
+          const data = await res.json()
+          
+          // Handle both array and object with data property
+          const serverBookings = Array.isArray(data) ? data : (data?.data || [])
+          
+          // Convert server format to client Booking format
+          const convertedBookings: Booking[] = serverBookings.map((b: any) => ({
+            id: String(b.id),
+            clientId: String(b.customer_id),
+            accommodationId: String(b.accommodation_id),
+            dateFrom: b.check_in,
+            dateTo: b.check_out,
+            status: b.status.toLowerCase() === 'confirmed' ? 'confirmed' : 'pending',
+            totalAmount: parseFloat(b.total_price),
+            createdAt: b.created_at,
+            paymentStatus: 'paid',
+            accommodation_name: b.accommodation_name, // Store room name for display
+          }))
+          
+          // Update localStorage with fresh data
+          localStorage.setItem('pos_bookings', JSON.stringify(convertedBookings))
+          setBookings(convertedBookings)
+          calculateStats(convertedBookings)
+        } else {
+          // Fallback to localStorage if server unavailable
+          const allBookings = storage.getBookings()
+          setBookings(allBookings)
+          calculateStats(allBookings)
+        }
+      } catch (err) {
+        console.error('Error fetching bookings:', err)
+        // Fallback to localStorage
+        const allBookings = storage.getBookings()
+        setBookings(allBookings)
+        calculateStats(allBookings)
+      }
+    }
 
-    const totalSales = allBookings.filter((b) => b.paymentStatus === "paid").reduce((sum, b) => sum + b.totalAmount, 0)
+    const calculateStats = (allBookings: any[]) => {
+      const today = new Date().toISOString().split("T")[0]
+      
+      // "Bookings Today" = bookings CREATED today (createdAt date)
+      const todayBookings = allBookings.filter((b) => {
+        const createdDate = new Date(b.createdAt).toISOString().split("T")[0]
+        return createdDate === today
+      })
 
-    setStats({
-      todayBookings: todayBookings.length,
-      availableRooms: accommodations.length - occupiedToday,
-      occupiedRooms: occupiedToday,
-      totalSales,
-    })
+      const accommodations = storage.getAccommodations()
+      
+      // "Occupied Rooms" = rooms with active bookings today (check_in <= today < check_out)
+      const occupiedToday = new Set(
+        allBookings
+          .filter((b) => {
+            const from = new Date(b.dateFrom).toISOString().split("T")[0]
+            const to = new Date(b.dateTo).toISOString().split("T")[0]
+            return from <= today && today < to && b.status !== "cancelled"
+          })
+          .map((b) => b.accommodationId),
+      ).size
+
+      // "Total Sales" = sum of all paid bookings
+      const totalSales = allBookings.filter((b) => b.paymentStatus === "paid").reduce((sum, b) => sum + b.totalAmount, 0)
+
+      setStats({
+        todayBookings: todayBookings.length,
+        availableRooms: accommodations.length - occupiedToday,
+        occupiedRooms: occupiedToday,
+        totalSales,
+      })
+    }
+
+    syncBookingsFromServer()
   }, [])
 
   const StatCard = ({ title, value }: { title: string; value: number | string }) => (
@@ -84,7 +142,7 @@ export default function DashboardPage() {
                       {storage.getClients().find((c) => c.id === b.clientId)?.firstName || "N/A"}
                     </td>
                     <td className="py-3 px-2">
-                      {storage.getAccommodations().find((a) => a.id === b.accommodationId)?.name || "N/A"}
+                      {(b as any).accommodation_name || storage.getAccommodations().find((a) => a.id === b.accommodationId)?.name || "N/A"}
                     </td>
                     <td className="py-3 px-2">
                       <span

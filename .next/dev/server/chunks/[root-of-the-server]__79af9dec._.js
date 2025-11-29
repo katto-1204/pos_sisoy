@@ -251,6 +251,21 @@ async function POST(request) {
                 body.notes || ''
             ]);
             const bookingId = results.insertId;
+            // Record transaction for this booking
+            try {
+                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["query"])(`INSERT INTO transactions (booking_id, customer_id, amount, payment_method, status, transaction_reference, description) 
+           VALUES (?, ?, ?, ?, 'completed', ?, ?)`, [
+                    bookingId,
+                    customerId,
+                    parseFloat(body.total_price),
+                    body.payment_method || 'cash',
+                    `TXN-${bookingNumber}`,
+                    `Payment for booking ${bookingNumber}`
+                ]);
+            } catch (txnError) {
+                console.error('Transaction record error (non-fatal):', txnError);
+            // Continue even if transaction insert fails — booking is already created
+            }
             // Fetch the newly created booking
             const newBooking = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["query"])(`SELECT b.*, c.first_name, c.last_name, a.name as accommodation_name 
          FROM bookings b

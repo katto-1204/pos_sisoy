@@ -1,4 +1,23 @@
 (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/lib/api.ts [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// Utility to get the correct API base URL
+__turbopack_context__.s([
+    "getApiBase",
+    ()=>getApiBase
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+function getApiBase() {
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
+    // Try multiple sources in order of preference
+    return ("TURBOPACK compile-time value", "http://localhost:3001/api") || window.API_BASE || `http://${window.location.hostname}:${window.location.port}/api` || 'http://localhost:3000/api';
+}
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
 "[project]/lib/storage.ts [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -7,6 +26,8 @@ __turbopack_context__.s([
     "storage",
     ()=>storage
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
+;
 const STORAGE_KEYS = {
     CLIENTS: "pos_clients",
     ACCOMMODATIONS: "pos_accommodations",
@@ -39,9 +60,10 @@ const storage = {
         clients.push(client);
         localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients));
         // Try to record to backend if API base is configured (fire-and-forget)
-        if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+        if ("TURBOPACK compile-time truthy", 1) {
             try {
-                fetch(`${API_BASE}/customers?action=create`, {
+                const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                fetch(`${apiBase}/customers?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -122,10 +144,11 @@ const storage = {
     },
     setAccommodations: (accommodations)=>{
         localStorage.setItem(STORAGE_KEYS.ACCOMMODATIONS, JSON.stringify(accommodations));
-        if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+        if ("TURBOPACK compile-time truthy", 1) {
             try {
                 // send full list to backend (best-effort)
-                fetch(`${API_BASE}/accommodations-updated?action=bulk_update`, {
+                const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                fetch(`${apiBase}/accommodations-updated?action=bulk_update`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -141,9 +164,10 @@ const storage = {
         const accommodations = storage.getAccommodations();
         accommodations.push(accommodation);
         storage.setAccommodations(accommodations);
-        if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+        if ("TURBOPACK compile-time truthy", 1) {
             try {
-                fetch(`${API_BASE}/accommodations?action=create`, {
+                const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                fetch(`${apiBase}/accommodations?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -183,11 +207,12 @@ const storage = {
         const bookings = storage.getBookings();
         bookings.push(booking);
         localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
-        if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+        if ("TURBOPACK compile-time truthy", 1) {
             try {
                 // include accommodation_name to help the server resolve legacy/non-numeric IDs
                 const acc = storage.getAccommodations().find((a)=>a.id === booking.accommodationId);
-                fetch(`${API_BASE}/bookings?action=create`, {
+                const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                fetch(`${apiBase}/bookings?action=create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -215,9 +240,10 @@ const storage = {
                 ...updates
             };
             localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
-            if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+            if ("TURBOPACK compile-time truthy", 1) {
                 try {
-                    fetch(`${API_BASE}/bookings?action=update&id=${id}`, {
+                    const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                    fetch(`${apiBase}/bookings?action=update&id=${id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -232,9 +258,10 @@ const storage = {
         const bookings = storage.getBookings();
         const filtered = bookings.filter((b)=>b.id !== id);
         localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(filtered));
-        if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
+        if ("TURBOPACK compile-time truthy", 1) {
             try {
-                fetch(`${API_BASE}/bookings?action=delete&id=${id}`, {
+                const apiBase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
+                fetch(`${apiBase}/bookings?action=delete&id=${id}`, {
                     method: 'DELETE'
                 }).catch(()=>{});
             } catch  {}
@@ -2410,4 +2437,4 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 }),
 ]);
 
-//# sourceMappingURL=_3ffe9d2f._.js.map
+//# sourceMappingURL=_69f0cb30._.js.map

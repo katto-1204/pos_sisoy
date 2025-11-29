@@ -445,15 +445,16 @@ __turbopack_context__.s([
     "default",
     ()=>PaymentPage
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/storage.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$booking$2f$booking$2d$complete$2d$modal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/booking/booking-complete-modal.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -481,7 +482,7 @@ function PaymentPage() {
             paymentStatus: "paid",
             transactionId: `TXN${Date.now()}`
         };
-        const API_BASE = typeof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] !== 'undefined' && __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env && ("TURBOPACK compile-time value", "http://localhost:3000/api") ? ("TURBOPACK compile-time value", "http://localhost:3000/api") : 'http://localhost:3000/api';
+        const API_BASE = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getApiBase"])();
         // Try to create booking on server first when API is configured
         if (("TURBOPACK compile-time value", "object") !== 'undefined' && API_BASE) {
             // quick ping to backend to make sure it's reachable and DB connection ok
@@ -604,10 +605,12 @@ function PaymentPage() {
                     try {
                         const listResp = await fetch(`${API_BASE}/bookings?action=list`);
                         if (listResp.ok) {
-                            const listJson = await listResp.json();
-                            if (listJson && Array.isArray(listJson.data)) {
+                            const listData = await listResp.json();
+                            // Handle both array and object with data property
+                            const serverBookings = Array.isArray(listData) ? listData : listData?.data || [];
+                            if (serverBookings.length > 0) {
                                 // Convert server bookings to client format and store
-                                const clientBookings = listJson.data.map((b)=>({
+                                const clientBookings = serverBookings.map((b)=>({
                                         id: String(b.id),
                                         clientId: String(b.customer_id),
                                         accommodationId: String(b.accommodation_id),
@@ -671,7 +674,7 @@ function PaymentPage() {
             onClose: handleCloseModal
         }, void 0, false, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 229,
+            lineNumber: 231,
             columnNumber: 7
         }, this);
     }
@@ -685,7 +688,7 @@ function PaymentPage() {
                     children: "Confirm Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 244,
+                    lineNumber: 246,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -696,7 +699,7 @@ function PaymentPage() {
                             children: "Total Amount Due"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 247,
+                            lineNumber: 249,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -707,13 +710,13 @@ function PaymentPage() {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 248,
+                            lineNumber: 250,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 246,
+                    lineNumber: 248,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -726,7 +729,7 @@ function PaymentPage() {
                                 children: "Payment Method"
                             }, void 0, false, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 253,
+                                lineNumber: 255,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -739,7 +742,7 @@ function PaymentPage() {
                                         children: "Cash Payment"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 259,
+                                        lineNumber: 261,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -747,7 +750,7 @@ function PaymentPage() {
                                         children: "GCash"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 260,
+                                        lineNumber: 262,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -755,7 +758,7 @@ function PaymentPage() {
                                         children: "Credit Card"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 261,
+                                        lineNumber: 263,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -763,24 +766,24 @@ function PaymentPage() {
                                         children: "Bank Transfer"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 264,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                                lineNumber: 254,
+                                lineNumber: 256,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                        lineNumber: 252,
+                        lineNumber: 254,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 251,
+                    lineNumber: 253,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -790,7 +793,7 @@ function PaymentPage() {
                     children: isProcessing ? "Processing Payment..." : "Confirm & Process Payment"
                 }, void 0, false, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 267,
+                    lineNumber: 269,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -801,31 +804,31 @@ function PaymentPage() {
                             children: "Payment Confirmation"
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 276,
+                            lineNumber: 278,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: "Payment will be processed securely. A receipt will be generated upon completion."
                         }, void 0, false, {
                             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                            lineNumber: 277,
+                            lineNumber: 279,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-                    lineNumber: 275,
+                    lineNumber: 277,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-            lineNumber: 243,
+            lineNumber: 245,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(dashboard)/booking/payment/page.tsx",
-        lineNumber: 242,
+        lineNumber: 244,
         columnNumber: 5
     }, this);
 }

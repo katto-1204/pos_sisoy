@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { storage } from "@/lib/storage"
+import { getApiBase } from "@/lib/api"
 import BookingCompleteModal from "@/components/booking/booking-complete-modal"
 
 export default function PaymentPage() {
@@ -33,9 +34,7 @@ export default function PaymentPage() {
       transactionId: `TXN${Date.now()}`,
     }
 
-    const API_BASE = (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_URL)
-      ? process.env.NEXT_PUBLIC_API_URL
-      : 'http://localhost:3000/api'
+    const API_BASE = getApiBase()
 
     // Try to create booking on server first when API is configured
     if (typeof window !== 'undefined' && API_BASE) {
@@ -163,10 +162,13 @@ export default function PaymentPage() {
           try {
             const listResp = await fetch(`${API_BASE}/bookings?action=list`)
             if (listResp.ok) {
-              const listJson = await listResp.json()
-              if (listJson && Array.isArray(listJson.data)) {
+              const listData = await listResp.json()
+              // Handle both array and object with data property
+              const serverBookings = Array.isArray(listData) ? listData : (listData?.data || [])
+              
+              if (serverBookings.length > 0) {
                 // Convert server bookings to client format and store
-                const clientBookings = listJson.data.map((b: any) => ({
+                const clientBookings = serverBookings.map((b: any) => ({
                   id: String(b.id),
                   clientId: String(b.customer_id),
                   accommodationId: String(b.accommodation_id),

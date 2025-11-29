@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { storage, type Booking } from "@/lib/storage"
+import { getApiBase } from "@/lib/api"
 
 type FilterStatus = "all" | "today" | "upcoming" | "completed" | "cancelled"
 
@@ -13,33 +14,36 @@ export default function BookingsPage() {
   useEffect(() => {
     // Sync bookings from server on mount
     const syncBookingsFromServer = async () => {
-      const API_BASE = typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : ''
-      if (API_BASE) {
-        try {
-          const resp = await fetch(`${API_BASE}/bookings?action=list`)
-          if (resp.ok) {
-            const json = await resp.json()
-            if (json && Array.isArray(json.data)) {
-              // Convert server bookings to client format
-              const clientBookings = json.data.map((b: any) => ({
-                id: String(b.id),
-                clientId: String(b.customer_id),
-                accommodationId: String(b.accommodation_id),
-                dateFrom: b.check_in,
-                dateTo: b.check_out,
-                status: b.status || 'confirmed',
-                totalAmount: parseFloat(b.total_price) || 0,
-                createdAt: b.created_at || new Date().toISOString(),
-                paymentStatus: 'paid',
-              }))
-              localStorage.setItem('pos_bookings', JSON.stringify(clientBookings))
-              setBookings(clientBookings)
-              return
-            }
+      const apiBase = getApiBase()
+      try {
+        const resp = await fetch(`${apiBase}/bookings?action=list`)
+        if (resp.ok) {
+          const data = await resp.json()
+          // Handle both array and object with data property
+          const serverBookings = Array.isArray(data) ? data : (data?.data || [])
+          
+          if (serverBookings.length > 0) {
+            // Convert server bookings to client format
+            const clientBookings: Booking[] = serverBookings.map((b: any) => ({
+              id: String(b.id),
+              clientId: String(b.customer_id),
+              accommodationId: String(b.accommodation_id),
+              dateFrom: b.check_in,
+              dateTo: b.check_out,
+              status: b.status.toLowerCase() === 'confirmed' ? 'confirmed' : 'pending',
+              totalAmount: parseFloat(b.total_price) || 0,
+              createdAt: b.created_at || new Date().toISOString(),
+              paymentStatus: 'paid',
+              accommodation_name: b.accommodation_name,
+            }))
+            localStorage.setItem('pos_bookings', JSON.stringify(clientBookings))
+            setBookings(clientBookings)
+            return
           }
-        } catch (e) {
-          // fall back to local storage if server unavailable
         }
+      } catch (e) {
+        console.error('Error syncing bookings from server:', e)
+        // fall back to local storage if server unavailable
       }
       // Fallback: read from localStorage
       const allBookings = storage.getBookings()

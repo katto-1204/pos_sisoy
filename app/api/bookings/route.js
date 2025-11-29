@@ -78,6 +78,25 @@ export async function POST(request) {
       );
       const bookingId = results.insertId
 
+      // Record transaction for this booking
+      try {
+        await query(
+          `INSERT INTO transactions (booking_id, customer_id, amount, payment_method, status, transaction_reference, description) 
+           VALUES (?, ?, ?, ?, 'completed', ?, ?)`,
+          [
+            bookingId,
+            customerId,
+            parseFloat(body.total_price),
+            body.payment_method || 'cash',
+            `TXN-${bookingNumber}`,
+            `Payment for booking ${bookingNumber}`,
+          ]
+        );
+      } catch (txnError) {
+        console.error('Transaction record error (non-fatal):', txnError);
+        // Continue even if transaction insert fails — booking is already created
+      }
+
       // Fetch the newly created booking
       const newBooking = await query(
         `SELECT b.*, c.first_name, c.last_name, a.name as accommodation_name 

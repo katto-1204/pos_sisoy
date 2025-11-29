@@ -1,4 +1,5 @@
 // Client-side storage utilities for POS system
+import { getApiBase } from './api'
 
 export interface Client {
   id: string
@@ -32,6 +33,7 @@ export interface Booking {
   transactionId?: string
   receiptGenerated?: boolean
   receiptPath?: string
+  accommodation_name?: string // Added for server-synced bookings
 }
 
 const STORAGE_KEYS = {
@@ -43,7 +45,6 @@ const STORAGE_KEYS = {
 }
 
 const STORAGE_VERSION = 2 // increment version to force reset
-const API_BASE = typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL : ''
 
 export const storage = {
   initializeStorage: () => {
@@ -69,9 +70,10 @@ export const storage = {
     clients.push(client)
     localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients))
     // Try to record to backend if API base is configured (fire-and-forget)
-    if (typeof window !== 'undefined' && API_BASE) {
+    if (typeof window !== 'undefined') {
       try {
-        fetch(`${API_BASE}/customers?action=create`, {
+        const apiBase = getApiBase()
+        fetch(`${apiBase}/customers?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -143,10 +145,11 @@ export const storage = {
   },
   setAccommodations: (accommodations: Accommodation[]) => {
     localStorage.setItem(STORAGE_KEYS.ACCOMMODATIONS, JSON.stringify(accommodations))
-    if (typeof window !== 'undefined' && API_BASE) {
+    if (typeof window !== 'undefined') {
       try {
         // send full list to backend (best-effort)
-        fetch(`${API_BASE}/accommodations-updated?action=bulk_update`, {
+        const apiBase = getApiBase()
+        fetch(`${apiBase}/accommodations-updated?action=bulk_update`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ data: accommodations }),
@@ -158,9 +161,10 @@ export const storage = {
     const accommodations = storage.getAccommodations()
     accommodations.push(accommodation)
     storage.setAccommodations(accommodations)
-    if (typeof window !== 'undefined' && API_BASE) {
+    if (typeof window !== 'undefined') {
       try {
-        fetch(`${API_BASE}/accommodations?action=create`, {
+        const apiBase = getApiBase()
+        fetch(`${apiBase}/accommodations?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -196,11 +200,12 @@ export const storage = {
     const bookings = storage.getBookings()
     bookings.push(booking)
     localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings))
-    if (typeof window !== 'undefined' && API_BASE) {
+    if (typeof window !== 'undefined') {
       try {
         // include accommodation_name to help the server resolve legacy/non-numeric IDs
         const acc = storage.getAccommodations().find((a) => a.id === booking.accommodationId)
-        fetch(`${API_BASE}/bookings?action=create`, {
+        const apiBase = getApiBase()
+        fetch(`${apiBase}/bookings?action=create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -223,9 +228,10 @@ export const storage = {
     if (index !== -1) {
       bookings[index] = { ...bookings[index], ...updates }
       localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings))
-      if (typeof window !== 'undefined' && API_BASE) {
+      if (typeof window !== 'undefined') {
         try {
-          fetch(`${API_BASE}/bookings?action=update&id=${id}`, {
+          const apiBase = getApiBase()
+          fetch(`${apiBase}/bookings?action=update&id=${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates),
@@ -238,9 +244,10 @@ export const storage = {
     const bookings = storage.getBookings()
     const filtered = bookings.filter((b) => b.id !== id)
     localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(filtered))
-    if (typeof window !== 'undefined' && API_BASE) {
+    if (typeof window !== 'undefined') {
       try {
-        fetch(`${API_BASE}/bookings?action=delete&id=${id}`, {
+        const apiBase = getApiBase()
+        fetch(`${apiBase}/bookings?action=delete&id=${id}`, {
           method: 'DELETE',
         }).catch(() => {})
       } catch {}
