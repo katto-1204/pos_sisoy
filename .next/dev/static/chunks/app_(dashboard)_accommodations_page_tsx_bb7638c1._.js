@@ -433,7 +433,7 @@ function AccommodationsPage() {
         columnNumber: 5
     }, this);
 }
-_s(AccommodationsPage, "Re0AidhbRYvTEvqbHw/DYet+cyY=");
+_s(AccommodationsPage, "2SI6frnp6ZTqIz/80IYOimc2LM8=");
 _c = AccommodationsPage;
 var _c;
 __turbopack_context__.k.register(_c, "AccommodationsPage");

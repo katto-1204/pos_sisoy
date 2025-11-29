@@ -337,7 +337,7 @@ function DashboardPage() {
         columnNumber: 5
     }, this);
 }
-_s(DashboardPage, "PpPNS5hbwSYVPzMrVSQ7+mDfU/c=");
+_s(DashboardPage, "y1JjELP7ewnxmkFDrp4X9WxUARw=");
 _c = DashboardPage;
 var _c;
 __turbopack_context__.k.register(_c, "DashboardPage");

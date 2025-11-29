@@ -290,7 +290,7 @@ function CustomerForm({ selectedClientId, onClientSelect, clients, onClientAdded
         columnNumber: 5
     }, this);
 }
-_s(CustomerForm, "MN33RV6q/sZlIgFjkmx5V+ftT1w=");
+_s(CustomerForm, "CNjlBsX+lDP8uas3ZNqxQvUMGos=");
 _c = CustomerForm;
 var _c;
 __turbopack_context__.k.register(_c, "CustomerForm");
